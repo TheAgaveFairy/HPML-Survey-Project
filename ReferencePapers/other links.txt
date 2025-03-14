@@ -1,0 +1,4 @@
+https://github.com/ROCm/HIP
+https://github.com/intel/gna
+https://intel.github.io/intel-npu-acceleration-library/developer.html
+https://github.com/openvinotoolkit/openvino_notebooks?tab=readme-ov-file#-telemetry
