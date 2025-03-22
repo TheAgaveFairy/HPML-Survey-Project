@@ -2,3 +2,5 @@ https://github.com/ROCm/HIP
 https://github.com/intel/gna
 https://intel.github.io/intel-npu-acceleration-library/developer.html
 https://github.com/openvinotoolkit/openvino_notebooks?tab=readme-ov-file#-telemetry
+https://learn.microsoft.com/en-us/windows/ai/directml/gpu-tensorflow-plugin
+https://rocm.blogs.amd.com/software-tools-optimization/pytorch-tensorflow-env/README.html
