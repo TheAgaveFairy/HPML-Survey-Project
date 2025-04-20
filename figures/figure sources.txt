@@ -1,0 +1,5 @@
+https://www.modular.com/blog/max-gpu-state-of-the-art-throughput-on-a-new-genai-platform max vs vllm
+
+https://www.reddit.com/r/MachineLearning/comments/17nor15/tensorflow_vs_pytorch_vs_jax_github_star_counts/ tf v pytorch adoption rates
+
+nnvm compiler https://tvm.apache.org/2017/10/06/nnvm-compiler-announcement
