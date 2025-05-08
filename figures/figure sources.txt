@@ -5,8 +5,13 @@ https://www.reddit.com/r/MachineLearning/comments/17nor15/tensorflow_vs_pytorch_
 nnvm compiler https://tvm.apache.org/2017/10/06/nnvm-compiler-announcement
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 file:///C:/Users/Paul%20Dutton/Documents/UTSA/HPML-Survey-Project/ReferencePapers/compiler%20techs%20in%20DL%20codesign%20SURVEY.pdf for keyword software v hardware
 
 https://xkcd.com/927/ 
 
 https://openai.com/index/triton/ triton performance
+=======
+https://openai.com/index/triton/ triton performance
+
+>>>>>>> Stashed changes
