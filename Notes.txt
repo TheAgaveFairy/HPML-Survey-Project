@@ -1,0 +1,61 @@
+https://www.overleaf.com/project/6804543dc85a7673b9ab2bd4 my project is here: most citations are broken '[?]' at the moment, bibliography is attached.
+
+https://github.com/TheAgaveFairy/HPML-Survey-Project/tree/main/ReferencePapers has my annotations
+
+The table for Mojo performance I'm currently strongly considering replacing for a number of factors. I might instead do a listing of a simple mojo program and talk about the language more. The latest version has some matrix operations happening so fast, that I'm skeptical that they're meaningful (the compiler might be doing too much to show what I wanted to show).
+
+The listing I'm considering would be some form of showing tiling, vectorizing, and/or parallelization. I might even remove it entirely, or simplify the comparison enough to just show an optimized C operation versus Mojo's. All of these options leave me wanting, but now that I have another week to get it right, I'm going to try and figure out what is best.
+
+########## If you're interested, feel no obligations to view:
+
+alias tile_n = 64
+alias tile_k = 4
+
+alias type = DType.float32
+alias nelts = get_simd_width()
+
+alias dim = 4096
+
+# Perform 2D tiling on the iteration space defined by end_x and end_y
+fn tile[tiled_fn: Tile2DFunc, tile_x: Int, tile_y: Int](end_x: Int, end_y: Int):
+    for y in range(0, end_y, tile_y):
+        for x in range(0, end_x, tile_x):
+            tiled_fn[tile_x, tile_y](x, y)
+
+
+# Use the above tile function to perform tiled matmul
+# Also parallelize with num_workers threads
+fn matmul_tiled(mut C: Matrix, A: Matrix, B: Matrix):
+    var num_workers = C.rows
+
+    @parameter
+    fn calc_row(m: Int):
+        @parameter
+        fn calc_tile[tile_x: Int, tile_y: Int](x: Int, y: Int):
+            for k in range(y, y + tile_y):
+
+                @parameter
+                fn dot[nelts: Int](n: Int):
+                    C.store(
+                        m,
+                        n + x,
+                        C.load[nelts](m, n + x)
+                        + A[m, k] * B.load[nelts](k, n + x),
+                    )
+
+                vectorize[dot, nelts, size=tile_x]()
+
+        tile[calc_tile, tile_n, tile_k](C.cols, B.rows)
+
+    parallelize[calc_row](C.rows, num_workers)
+
+
+fn bench_tiled():
+    var a = Matrix[dim, dim].rand()
+    var b = Matrix[dim, dim].rand()
+    var c = Matrix[dim, dim].rand()
+
+    var start_time = time.perf_counter_ns()
+    matmul_tiled(c, a, b)
+    var end_time = time.perf_counter_ns()
+    print("tiled", (end_time - start_time) / 1000.0, "us")
